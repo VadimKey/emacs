@@ -1,0 +1,498 @@
+jogit: https://github.com/emacs-mirror/emacs
+Emacs Lisp: https://www.gnu.org/software/emacs/manual/eintr.html
+TODO:   learn ELisp; read "Mastering Emacs" blog, master "dired", learn Helm, learn IDO mode,
+        learn macros, learn TRAMP mode
+TRY: magit, multiple cursors, flycheck, orgmode, dumb-jump, ripgrep
+IDE: LSP mode, EGlot, Language Server
+Communities to check: /r/emacs; emacs.stackexchange
+Blogs: https://planet.emacslife.com/
+
+
+User interface
+--------------
+
++------------------------------------------------------------------+
+| Emacs frame                                             [_][-][x]|
++------------------------------------------------------------------+
+| Menu                                                             |
++------------------------------------------------------------------+
+|	Toolbar                                                 	   |
+|                                                                  |
++------------------------------------------------------------------+
+| Window                                                		   |
+|							                                       |
+|    █ <-point(cursor)         			                           |
+|								                                   |
+|								                                   |
+|	                    Buffer				                       |
+|								                                   |
+|								                                   |
+|								                                   |
+|								                                   |
++------------------------------------------------------------------+
+|U:**-         Modeline                                            |
++------------------------------------------------------------------+
+| minibuffer / echo area                                           |
++------------------------------------------------------------------+
+
+
+Terminology
+-----------
+
+DWIM    - do what I mean
+Killing - cutting
+Yanking - pasting
+Copying - saving to the kill ring (or just copy)
+Font locking - syntax highlighting
+faces   - font properties
+
+
+Keys
+----
+
+M - Alt
+C - Ctrl
+S - Shift
+s - Super (Win key)
+H - Hyper (Context key)
+
+M-S-x <TAB> gives a list of curated commands specific to the current buffer
+
+
+NEGATIVE ARGUMENT
+-----------------
+
+C-M--    let's say C-M-v "presses page down in other window", then C-M--, C-M-v
+         will work as "page up in other window", whis is very useful as keeps
+         fingers on the same place (maintaining tempo)
+
+MOVEMENT
+--------
+C-M-f     move forward by sexp                            (backward C-M-b)
+          in C++ it allow to jump between opening/closing {}
+
+C-M-u     move up out from the list (to the outer context)(down     C-M-d)
+          In C++ C-M-u jumps to outer scope
+
+C-M-n     move forward to the next context                (backward C-M-p)
+          Looks like in C++ it works the same as C-M-f/C-M-b
+
+M-}       move forward to end of paragraph                (backward M-{)
+          In C++ paragraph it's a block of text between empty lines.
+
+M-e       move to end of sentence (in C++ it's defined as semi-collon or parenthesis)
+
+C-M-a     move to beginning of the function/class/namespace (to end  C-M-e)
+
+C-v       page down
+M-v       page up
+C-M-v / C-M-S-v  the same for other window
+
+M-r       like C-l but moves the cursor to top/center/bottom
+C-M-l     re-position the comment/function so it's in full view
+M-g M-g   goto line
+M-g TAB   goto column
+M-g c     goto character position
+
+
+MARKING (SELECTION)
+-------------------
+C-u C-SPC move back to the mark
+C-SPC     sets the mark
+C-x C-x   swap the mark and point
+M-h       mark the whole paragraph
+C-x h     mark the whole buffer
+C-M-h     mark the whole function
+C-M-SPC   mark next expression (word)
+
+
+EDITING
+-------
+Killing
+~~~~~~~
+M-k     kill sentence
+C-M-k   kill sexp
+C-S-<backspace> kill current line
+M-z     zapping, you specify a characted and Emacs will kill text
+        up to it.
+
+Yanking
+~~~~~~~
+M-y     cycle through kill ring (try C-y and then M-y immediately)
+
+Transposing
+~~~~~~~~~~~
+C-t     characters
+M-t     words
+C-M-t   s-exps
+C-x C-t lines
+try M-x transpose- (or M-x apropos transpose-)
+
+Filling
+~~~~~~~
+M-q     usual refill
+C-x f   set column width
+C-u M-q justify the text equally
+
+Commenting
+~~~~~~~~~~
+M-;     comment/uncomment, start a new comment
+C-x C-; comment/uncomment line
+M-x comment-box  comment the region as a box
+
+Indentation
+~~~~~~~~~~~
+C-x TAB interactively ident region using arrows (or S-arrows)
+
+Changing case
+~~~~~~~~~~~~~
+u - up, l - lo, c - capitalize, use negative argument (M--) to change case of prev. word
+Region C-x C-u, C-x C-l
+Word   M-c, M-u, M-l
+
+Alignemnt
+~~~~~~~~~
+M-x align-current   alignes the current section of the text using rules, e.g. so all assignemts
+                    are aligned in C++
+M-x align-regexp    you can specify alignment symbol (e.g. \$ will use $ to align text elements)
+C-u Mx align-regexp switches to "complex mode" so you can align text in CSV file
+
+Split/Join lines
+~~~~~~~~~~~~~~~~
+C-o       inserts a new line after cursor
+C-x C-o   deletes all blank lines after cursor
+C-M-o     split the line by shifint the right part (from cursor) down
+M-^       joins the line with the previous
+
+Whitespaces
+~~~~~~~~~~~
+M-\       trims whitespaces around cursor
+
+
+WINDOW MANAGEMENT
+-----------------
+C-x 0     hide active window
+C-x 1     hide all other windows (except active)
+C-x 2     split horizontally
+C-x 3     split vertically
+C-x o     switch active window (M-o in my case)
+S-<arrow> when windmove-default-keybindings is set allows to use shift+arr to switch windows
+
+other windows
+~~~~~~~~~~~~~
+C-x 4 C-f   open a file in the other window
+C-x 4 d     dired in the other window
+C-x 4 b     choose what buffer to display in the other window
+C-x 4 C-h   show all available "the other window" commands
+
+frames
+~~~~~~
+C-x 5 2     create a new frame
+C-x 5 0     delete _active_ frame
+C-x 5 1     delete _other_ frameXS
+C-x 5 b     switch a buffer in other frame
+C-x 5 C-f   open a file in the other frame
+
+tab bars
+~~~~~~~~
+C-x t 0     delete the current tab
+C-x t 1     close all other tabs
+C-x t RET   choose a tab by name
+C-x t o / C-<tab>   next tab
+C-S-<tab>   previous tab
+C-x t r     rename tab
+M-x tab-undo  undoes a closed tab (repeat to undo closing of multiple tabs)
+
+tab lines
+~~~~~~~~~
+M-x customize-option global-tab-line-mode
+C-x <left>
+C-x <right>
+
+Help
+----
+
+If you forget a particular key combination you can always append C-h to a prefix key.
+E.g. C-x 8 
+
+M-x info
+    Emacs
+    Emacs Lisp Intro (or C-h R eintr)
+
+Apropos
+C-h a -word$   will show all commands that end with "-word" (M-x apropos-command). There are also others apropos commands.
+
+M-x describe-mode (or C-h m)
+
+Help workflow
+~~~~~~~~~~~~~
+Let's say I want to know more about version control.
+
+1. M-x info (or C-h i)
+2. Navigate to Emacs hyperlink, open it
+3. C-s version control
+
+Another way is to use apropos:
+C-h d version control
+
+If we know that version control commands start with vc- we can use:
+M-x apropos-command ^vc-
+
+If we know that vc commands use combination C-x v we can try C-x v C-h to get help for them
+
+
+Config files
+------------
+
+~/.config/emacs           - config dir
+~/.config/emacs/init.el   - customizations / settings
+
+
+elisp evaluation
+----------------
+
+M-x eval-buffer
+M-x eval-region
+
+
+Packages
+--------
+
+M-x package-list-packages
+M-x package-refresh-contents
+
+
+Customization
+-------------
+
+M-x customize
+M-x customize-themes     I liked leuven
+M-x customize-face       put the point to the element and run customize-face to customize this element
+M-x list-colors-display
+
+
+SECRET COMMANDS
+---------------
+M-x server-start
+M-x lunar-phases
+ESC ESC ESC  return to just one window
+M-x delete-duplicate-lines (univ.arg. C-u deletes last dup, C-u C-u delete only adj.duplicates)
+M-x flush-lines    deletes all lines in a region that match a pattern
+M-x keep-lines     keeps only lines that match pattern
+M-x eww            browser
+C-u M-x eww        browser in new buffer
+M-x browse-url     browse URL using a default browser (defined in browse-url-default-browser)
+M-x dired          TODO: master
+M-x proced         like shell `top` command
+
+
+BOOKMARKS & REGISTERS
+---------------------
+
+Bookmarks are stored in ~/.emacs.d/bookmarks
+
+C-x r l   list bookmarks
+C-x r m   set a bookmark
+C-x r b   jump to bookmark
+
+
+SEARCH
+------
+
+during search when variable `isearch-allow-motion` is on it's possible to:
+M-<    jump to the first match (M-> - last)
+C-v    jump to the next match not currently visible (M-v - previous)
+C-s C-w  add word at cursor to search string (can repeat multiple times to add more words)
+C-s M-s c  toggles case sensitivity
+C-s M-s w  uses word mode (so it allows punctuations between words)
+
+M-x occur    or (M-s o)   like grep but in the current buffer and embedded
+    in occur buffer:
+       g - refresh
+       q - quit
+       e - edit (C-c C-c to apply)
+    outside:
+        M-g M-n - next occurence (or C-x `)
+        M-g M-p - prev occurence
+
+M-x multi-occur-in-matching-buffers
+      like "occur" but works on multiple buffers (buffer name should match the template
+      e.g. ".*.hpp").
+
+
+INDEXING
+--------
+
+M-x imenu   list of points of interest (in C++: classes/functions)
+            in my setup M-i works as imenu
+
+
+HELM - 3rd party autocompletion
+-------------------------------
+
+Helm is for in-depth searching and completion, IDO mode when you roughly know what are
+     you looking for.
+to install M-x package-install help RET
+C-x c  is a prefix for all Helm commands
+Help:
+    M-x apropos-command ^helm-
+    M-x apropos-variable ^helm-
+TODO: learn Helm (https://emacs-helm.github.io/helm/)
+
+
+IDO
+---
+C-s and C-r move to next and prev match
+TODO: read https://www.masteringemacs.org/article/introduction-to-ido-mode
+
+
+GREPPING
+--------
+
+M-x grep-find   run find/grep
+High-level commands:
+M-x lgrep  non-recursive grep in directory
+M-x rgrep  recursive grep in directory
+M-x rzgrep grep in compressed files
+to customize:
+  M-x customize-group grep
+
+
+EMACS REGEXPS
+-------------
+
+Emacs is different from PCRE:
+\|       alternative
+\(, \)   capture group
+\{, \}   repetition
+no \d use [0-9] or [:digit:]
+
+Emacs-only
+\<, \>   begin and end of word
+\_<, \_> beginning and end of symbol
+\1 to \9 inserts text from group \N
+\?       promt user
+\#       insert a number incremented from 0
+\&       insert whole match string
+\,(form ...)  use elisp (limited usability as form should be a function that accepts strings)
+
+Examples:
+\s-      search all whitespaces
+\,(upcase \N)   uppercase capturing group \N
+\,(format "%.2f" \#N)   casts \#N to a number and format it as a decimal
+
+
+MACROS
+------
+
+F3      start macro recording
+F3      stop
+C-x e   play last macro
+M-<number> F4  play last macro <number> of times (e.g. M-5 F4)
+
+There're a lot of things one can do with macros. TODO: learn more
+
+
+AUTOCOMPLETE
+------------
+
+M-/   Expands words
+C-M-/ Show completions
+try to use Hippie Expand (in "open file" it also works, use M-/ like TAB in shell),
+I didn't like it and disabled.
+
+
+SPELL CHECKING
+--------------
+needs ispell or aspell installed on Linux, even if Aspell is installed in Emacs
+it will be used by Ispell-* commands.
+
+M-$   check the word under cursor
+M-x flyspell-mode       to highlight spelling errors
+M-x flyspell-prog-mode  the same but only for strings and docstrings
+M-x ispell-buffer       runs spell check on buffer
+M-x ispell-region       runs spell check on region
+
+Dictionary lookup
+~~~~~~~~~~~~~~~~~
+M-x dictionary-lookup-definition    Looks for the word at point
+M-x dictionary-search               Searches for a given word
+M-x dictionary-select-dictionary    Selects the dictionary to search
+
+Inserting special characters
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C-q C-j   inserts \n (so you can find/replace it)
+
+
+PROJECT MANAGEMENT
+------------------
+
+Emacs project manager is called project.el. It uses vcs repo (git) to
+infer project files, project root, allows search/replace across
+multiple files,
+
+C-x p p     switch to other project
+C-x p b     switch to buffer belonging to this project
+C-x p f     find file in project
+C-x p k     kill project buffers
+C-x p g     search by regexp
+C-x p r     regexp search/replace
+C-x p c     compile project
+C-x p v     version control
+C-x p s     shell
+C-x p d     dired
+
+X-refs
+~~~~~~
+M-.         find definition
+M-,         pop back to M-. invocation
+M-?         find refs matching a pattern
+C-M-.       find symbols matching a pattern
+by default it relies on TAGS but there're other ways, like 'dump-jump'
+
+
+LOG MANAGEMENT
+--------------
+
+C-x C-r     open file in read-only mode
+C-x C-q     toggle read-only mode
+M-x flush-lines  delete lines matching a pattern
+M-x keep-line    keeps only lines matching a pattern
+M-s o            list lines matching a pattern (calls `occur` then you can re-apply `M-s o` to filter further)
+M-x auto-revert-mode           revert buffer when the file changes on disk
+M-x auto-revert-tail-mode      like "tail -f"
+
+HIGHLIGHTERS
+------------
+M-s h p     Highlights a phrase (you can use different colours)
+M-s h r     Highlights a regular expression
+M-s h .     Highlights symbol at the point
+M-s h u     Removes highlighting under the point
+M-x highlight-*
+
+
+TRAMP
+-----
+TODO: learn, e.g. edit files on RaspberryPi in Emacs
+      it can also do account elevation (sudo)
+      /sudo:root@localhost:/etc/fstab
+
+
+SHELL / TERMINALS
+-----------------
+M-x ansi-term      fully-functional but slow terminal (can use less and run vim)
+
+Hotkeys in shell:
+~~~~~~~~~~~~~~~~~
+M-r  search history backwards (like C-r in bash)
+C-c C-p / C-c C-n  jump to the prev/next command
+C-c C-s            save output of the last command to file
+C-c C-o            flushes current command
+
+Commands in eshell
+~~~~~~~~~~~~~~~~~~
+dired
+find-dile
+
+
+
