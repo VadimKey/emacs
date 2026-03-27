@@ -1,0 +1,20 @@
+Emacs
+Try plugins (not all)
+
+Claude pluguns
+
+VSCode Dark Plus theme
+Treemacs for the sidebar file browser ("Explorer")
+Centaur Tabs for the tab bar
+breadcrumb to show file paths as breadcrumbs
+idle-highlight-mode to automatically highlight occurrences of the symbol at point
+Emulation of most keybindings listed in the "General", "Basic Editing", "Rich Languages Editing", and "Multi-cursor and selection" sections of the VSCode keyboard shortcuts cheatsheet.
+All editing packages required for emulation, including whole-line-or-region, expand-region, multiple-cursors, and smartparens
+vc and magit for version control
+diff-hl and blamer to show in-buffer version control information
+A comprehensive collection of completion packages - Vertico, orderless, Consult, marginalia, and company.
+Lisp editing packages - sly, geiser, and adjust-parens (similar to Parinfer)
+eat for terminals
+Sensible Emacs defaults, and other goodies - org-superstar, pdf-tools, undo-tree, helpful, rainbow-mode, …
+
+https://karl-voit.at/2017/09/23/orgmode-as-markup-only/
