@@ -1,4 +1,10 @@
 ;;; -*- lexical-binding: t -*-
+
+;;; Little help
+;; Use 'xref-find-definitions' [M-.] to find sources of functions
+;; Use 'describe-function' bound to [C-h f]
+;; Use M-: for 'eval-expression'
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -18,6 +24,7 @@
  '(show-trailing-whitespace t)
  '(tab-line-tabs-function 'tab-line-tabs-mode-buffers)
  '(tab-width 4)
+ '(text-mode-hook '(turn-on-auto-fill))
  '(visible-bell t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -60,3 +67,19 @@
 
 (require 'whole-line-or-region)
 (whole-line-or-region-global-mode 1)
+(put 'narrow-to-region 'disabled nil)
+
+
+;;; Key binding for 'occur'
+; I use occur a lot, so let's bind it to a key:
+(keymap-global-set "C-c o" 'occur)
+
+
+;;; Line to top of window.
+;;; replace three keystroke sequence C-u 0 C-l
+(defun line-to-top-of-window ()
+  "Move the line that point is on to top of window."
+  (interactive)
+  (recenter 0))
+
+(keymap-global-set "<f6>" 'line-to-top-of-window)
