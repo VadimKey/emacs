@@ -1,6 +1,60 @@
 ;;; -*- lexical-binding: t -*-
 
+;;;
+;;; TODO
+;;;
+;; Learn:
+;; [ ] read "Mastering Emacs" blog,
+;; [ ] master 'dired'
+;; [ ] learn 'Helm',
+;; [ ] learn 'IDO' mode,
+;; [ ] learn macros
+;; [ ] learn 'TRAMP' mode
+;; [ ] learn *multiple cursors*, 'flycheck', 'orgmode', 'dumb-jump', 'ripgrep'
+;; [ ] learn/try IDE: LSP mode, EGlot, Language Server
+
+;;
+;;;
+;;; TODO: List of plugins to try
+;;;
+;;
+;; Claude pluguns
+;;
+;; VSCode Dark Plus theme
+;;
+;; *Treemacs* for the sidebar file browser ("Explorer")
+;;
+;; *Centaur Tabs* for the tab bar
+;;
+;; *breadcrumb* to show file paths as breadcrumbs
+;;
+;; 'idle-highlight-mode' to automatically highlight occurrences of the
+;; symbol at point
+;;
+;; Emulation of most keybindings listed in the
+;; "General", "Basic Editing", "Rich Languages Editing", and
+;; "Multi-cursor and selection" sections of the *VSCode keyboard shortcuts* cheatsheet.
+;;
+;; All editing packages required for emulation, including 'whole-line-or-region', 'expand-region',
+;; 'multiple-cursors', and 'smartparens'
+;;
+;; 'vc' and 'magit' for version control
+;; 'diff-hl' and 'blamer' to show in-buffer version control information
+;;
+;; A comprehensive collection of completion packages - 'Vertico', 'orderless', 'Consult', 'marginalia', and 'company'.
+;;
+;; Lisp editing packages: 'sly', 'geiser', and 'adjust-parens' (similar to 'Parinfer')
+;;
+;; 'eat' for terminals
+;;
+;; Sensible Emacs defaults, and other goodies: 'org-superstar', 'pdf-tools', 'undo-tree', 'helpful', 'rainbow-mode'
+;;
+;; https://karl-voit.at/2017/09/23/orgmode-as-markup-only/
+;;
+
+;;;
 ;;; Little help
+;;;
 ;; Use 'xref-find-definitions' [M-.] to find sources of functions
 ;; Use 'describe-function' bound to [C-h f]
 ;; Use M-: for 'eval-expression'
@@ -10,6 +64,12 @@
 ;;;
 ;;
 ;; *** Written Guides ***
+;;
+;; Communities to check:
+;;     /r/emacs;
+;;     emacs.stackexchange
+;;
+;; Blogs: https://planet.emacslife.com/
 ;;
 ;; 1) Mastering Emacs - https://www.masteringemacs.org/ – Not
 ;; C++-specific, but teaches you how Emacs works under the hood
@@ -48,9 +108,9 @@
 ;; 4) Emacs as a C++ IDE (YouTube, Derek Taylor / DistroTube)
 ;;    Practical demo of lsp-mode + clangd for C++.
 ;;
-;; 	     https://www.youtube.com/@DistroTube/playlists
-;; 	     https://www.youtube.com/watch?v=5FQwQ0QWBTU
-;; 	     https://www.youtube.com/watch?v=qW7sw7pd_6s
+;;       https://www.youtube.com/@DistroTube/playlists
+;;       https://www.youtube.com/watch?v=5FQwQ0QWBTU
+;;       https://www.youtube.com/watch?v=qW7sw7pd_6s
 ;;
 ;; *** Configurations to Learn From ***
 ;;
@@ -58,6 +118,7 @@
 ;; the box. Good to explore if you want everything working fast, then
 ;; pick apart the config to learn.
 ;; https://github.com/doomemacs/doomemacs
+;;
 
 
 (custom-set-variables
